@@ -6,17 +6,9 @@ module.exports = (app) => {
   };
 
   const updateCurrentProfile = (req, res) => {
-    profile = {
-      _id: new Date().getTime() + "",
-      profilePicture: "../../images/dp.jpg",
-      bannerPicture: "../../images/matrix.jpg",
-      ...req.profile,
-      dateJoined: "September 20",
-      followingCount: 312,
-      followersCount: 180,
-    };
+    const newProfile = req.body;
+    profile = newProfile;
     res.sendStatus(200);
-    //res.json(updatedProfile);
   };
 
   app.get("/api/profile", getCurrentProfile);
