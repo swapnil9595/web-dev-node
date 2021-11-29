@@ -1,9 +1,10 @@
-let tweets = require("../data/tweets.json");
+// let tweets = require("../data/tweets.json");
+const dao = require("../db/tweets/tweet-dao");
 
 module.exports = (app) => {
-  const findAllTweets = (req, res) => {
-    res.json(tweets);
-  };
+  const findAllTweets = (req, res) =>
+    dao.findAllTweets().then((tweets) => res.json(tweets));
+
   const postNewTweet = (req, res) => {
     const newTweet = {
       _id: new Date().getTime() + "",
@@ -22,11 +23,12 @@ module.exports = (app) => {
       ...req.body,
     };
     tweets = [newTweet, ...tweets];
-    res.json(newTweet);
+    dao.postNewTweet().then((tweets) => res.json(tweets));
   };
   const deleteTweet = (req, res) => {
     const id = req.params["id"];
     tweets = tweets.filter((tweet) => tweet._id !== id);
+    dao.deleteTweet().then((tweets) => res.json(tweets));
     res.sendStatus(200);
   };
   const likeTweet = (req, res) => {
@@ -45,6 +47,7 @@ module.exports = (app) => {
         return tweet;
       }
     });
+    dao.likeTweet().then((tweets) => res.json(tweets));
     res.sendStatus(200);
   };
 

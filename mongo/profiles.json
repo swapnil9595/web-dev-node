@@ -1,0 +1,17 @@
+[{
+  "_id": {
+    "$oid": "619d0687ea3b888343ef7e31"
+  },
+  "firstName": "Swapnil",
+  "lastName": "Mittal",
+  "handle": "smitten",
+  "profilePicture": "../../images/dp.jpg",
+  "bannerPicture": "../../images/matrix.jpg",
+  "bio": "Student @ Khoury College of Computer Sciences. Interested in web-dev, software engineering and ethical hacking(not very good tho!). Love to watch mind-bending thriller movies (anyone who got TENET in the first go is lying. Trust me!)",
+  "website": "youtube.com/webdevtv",
+  "location": "Boston, MA",
+  "dateOfBirth": "May 4 1995",
+  "dateJoined": "September 20",
+  "followingCount": 312,
+  "followersCount": 180
+}]

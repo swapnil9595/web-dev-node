@@ -1,0 +1,82 @@
+[{
+  "_id": {
+    "$oid": "619bd6b2ea3b888343ef7e28"
+  },
+  "topic": "Space",
+  "userName": "SpaceX",
+  "verified": false,
+  "handle": "spacex",
+  "title": "",
+  "tweet": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+  "attachments": {
+    "image": "../../images/starship.jpg"
+  },
+  "time": "last month",
+  "logo-image": "../../images/starship.jpg",
+  "avatar-image": "../../images/nodejs.png",
+  "tweets": "120K",
+  "stats": {
+    "comments": 123,
+    "retweets": 234,
+    "likes": 345
+  }
+},{
+  "_id": {
+    "$oid": "619bd6d0ea3b888343ef7e29"
+  },
+  "topic": "Web Development",
+  "userName": "jQuery",
+  "verified": false,
+  "handle": "jQuery",
+  "title": "jQuery",
+  "tweet": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+  "time": "last week",
+  "logo-image": "../../../images/jquery.png",
+  "avatar-image": "../../../images/jquery.png",
+  "tweets": "122K",
+  "stats": {
+    "comments": 123,
+    "retweets": 234,
+    "likes": 345
+  }
+},{
+  "_id": {
+    "$oid": "619bd6e8ea3b888343ef7e2a"
+  },
+  "topic": "Web Development",
+  "userName": "NodeJS",
+  "verified": true,
+  "handle": "NodeJS",
+  "title": "",
+  "tweet": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+  "time": "last month",
+  "logo-image": "../../images/nodejs.png",
+  "avatar-image": "../../images/nodejs.png",
+  "tweets": "120K",
+  "stats": {
+    "comments": 123,
+    "retweets": 234,
+    "likes": 345
+  }
+},{
+  "_id": {
+    "$oid": "619bd709ea3b888343ef7e2b"
+  },
+  "topic": "Web Development",
+  "userName": "ReactJS",
+  "verified": false,
+  "handle": "ReactJS",
+  "time": "2h",
+  "title": "React.js is a component based front end library that makes it very easy to build Single Page Applications or SPAs",
+  "tweet": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+  "attachments": {
+    "video": "unKvMC3Y1kI"
+  },
+  "logo-image": "../../images/react.png",
+  "avatar-image": "../../images/react.png",
+  "stats": {
+    "comments": 123,
+    "retweets": 234,
+    "likes": 345
+  }
+}]

@@ -1,0 +1,654 @@
+swapnils-MBP:~ Swapnil$ export PATH="$PATH:/usr/local/mongodb-macos-x86_64-5.0.4/bin"
+swapnils-MBP:~ Swapnil$ mongo
+MongoDB shell version v5.0.4
+connecting to: mongodb://127.0.0.1:27017/?compressors=disabled&gssapiServiceName=mongodb
+Implicit session: session { "id" : UUID("ad6f27b7-3746-466e-b29f-02332549ddde") }
+MongoDB server version: 5.0.4
+================
+Warning: the "mongo" shell has been superseded by "mongosh",
+which delivers improved usability and compatibility.The "mongo" shell has been deprecated and will be removed in
+an upcoming release.
+For installation instructions, see
+https://docs.mongodb.com/mongodb-shell/install/
+================
+Welcome to the MongoDB shell.
+For interactive help, type "help".
+For more comprehensive documentation, see
+	https://docs.mongodb.com/
+Questions? Try the MongoDB Developer Community Forums
+	https://community.mongodb.com
+---
+The server generated these startup warnings when booting: 
+        2021-11-21T19:18:46.880-05:00: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+        2021-11-21T19:18:46.880-05:00: This server is bound to localhost. Remote systems will be unable to connect to this server. Start the server with --bind_ip <address> to specify which IP addresses it should serve responses from, or with --bind_ip_all to bind to all interfaces. If this behavior is desired, start the server with --bind_ip 127.0.0.1 to disable this warning
+        2021-11-21T19:18:46.880-05:00: Soft rlimits for open file descriptors too low
+        2021-11-21T19:18:46.880-05:00:         currentValue: 2560
+        2021-11-21T19:18:46.880-05:00:         recommendedMinimum: 64000
+---
+---
+        Enable MongoDB's free cloud-based monitoring service, which will then receive and display
+        metrics about your deployment (disk utilization, CPU, operation statistics, etc).
+
+        The monitoring data will be available on a MongoDB website with a unique URL accessible to you
+        and anyone you share the URL with. MongoDB may use this information to make product
+        improvements and to suggest MongoDB products and deployment options to you.
+
+        To enable free monitoring, run the following command: db.enableFreeMonitoring()
+        To permanently disable this reminder, run the following command: db.disableFreeMonitoring()
+---
+> show dbs
+admin   0.000GB
+config  0.000GB
+local   0.000GB
+> use webdev
+switched to db webdev
+> db.movies.insert({title: 'Aliens', rating: 4.5})
+WriteResult({ "nInserted" : 1 })
+> show dbs
+admin   0.000GB
+config  0.000GB
+local   0.000GB
+webdev  0.000GB
+> db.movies.insert({title: 'Terminator', rating: 4.8})
+WriteResult({ "nInserted" : 1 })
+> db.movies.insert({title: 'Avatar', rating: 4.7})
+WriteResult({ "nInserted" : 1 })
+> db.movies.insert({title: 'Dune', rating: 4.9})
+WriteResult({ "nInserted" : 1 })
+> db.movies.find();
+{ "_id" : ObjectId("619bba9bea3b888343ef7e24"), "title" : "Aliens", "rating" : 4.5 }
+{ "_id" : ObjectId("619bbafcea3b888343ef7e25"), "title" : "Terminator", "rating" : 4.8 }
+{ "_id" : ObjectId("619bbb09ea3b888343ef7e26"), "title" : "Avatar", "rating" : 4.7 }
+{ "_id" : ObjectId("619bbb13ea3b888343ef7e27"), "title" : "Dune", "rating" : 4.9 }
+> db.movies.find({_id:ObjectId("619bbb13ea3b888343ef7e27")});
+{ "_id" : ObjectId("619bbb13ea3b888343ef7e27"), "title" : "Dune", "rating" : 4.9 }
+> db.movies.find({title:'Aliens'});
+{ "_id" : ObjectId("619bba9bea3b888343ef7e24"), "title" : "Aliens", "rating" : 4.5 }
+> db.movies.find().pretty()
+{
+	"_id" : ObjectId("619bba9bea3b888343ef7e24"),
+	"title" : "Aliens",
+	"rating" : 4.5
+}
+{
+	"_id" : ObjectId("619bbafcea3b888343ef7e25"),
+	"title" : "Terminator",
+	"rating" : 4.8
+}
+{
+	"_id" : ObjectId("619bbb09ea3b888343ef7e26"),
+	"title" : "Avatar",
+	"rating" : 4.7
+}
+{
+	"_id" : ObjectId("619bbb13ea3b888343ef7e27"),
+	"title" : "Dune",
+	"rating" : 4.9
+}
+> dp.movies.updateOne({title:'Avatar'},{rating:4.9})
+uncaught exception: ReferenceError: dp is not defined :
+@(shell):1:1
+> db.movies.updateOne({title:'Avatar'},{rating:4.9})
+uncaught exception: Error: the update operation document must contain atomic operators :
+DBCollection.prototype.updateOne@src/mongo/shell/crud_api.js:565:19
+@(shell):1:1
+> db.movies.find().pretty()
+{
+	"_id" : ObjectId("619bba9bea3b888343ef7e24"),
+	"title" : "Aliens",
+	"rating" : 4.5
+}
+{
+	"_id" : ObjectId("619bbafcea3b888343ef7e25"),
+	"title" : "Terminator",
+	"rating" : 4.8
+}
+{
+	"_id" : ObjectId("619bbb09ea3b888343ef7e26"),
+	"title" : "Avatar",
+	"rating" : 4.7
+}
+{
+	"_id" : ObjectId("619bbb13ea3b888343ef7e27"),
+	"title" : "Dune",
+	"rating" : 4.9
+}
+> db.movies.updateOne({title:'Avatar'},{rating:4.9});
+uncaught exception: Error: the update operation document must contain atomic operators :
+DBCollection.prototype.updateOne@src/mongo/shell/crud_api.js:565:19
+@(shell):1:1
+> db.movies.updateOne({title:'Avatar'},{rating:4.9})
+uncaught exception: Error: the update operation document must contain atomic operators :
+DBCollection.prototype.updateOne@src/mongo/shell/crud_api.js:565:19
+@(shell):1:1
+> db.movies.updateOne({title: 'Avatar'}, {rating: 4.9})
+uncaught exception: Error: the update operation document must contain atomic operators :
+DBCollection.prototype.updateOne@src/mongo/shell/crud_api.js:565:19
+@(shell):1:1
+> 
+> db.movies.updateOne({title: 'Avatar'}, {$set:{rating: 4.9}})
+{ "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
+> db.movies.find().pretty()
+{
+	"_id" : ObjectId("619bba9bea3b888343ef7e24"),
+	"title" : "Aliens",
+	"rating" : 4.5
+}
+{
+	"_id" : ObjectId("619bbafcea3b888343ef7e25"),
+	"title" : "Terminator",
+	"rating" : 4.8
+}
+{
+	"_id" : ObjectId("619bbb09ea3b888343ef7e26"),
+	"title" : "Avatar",
+	"rating" : 4.9
+}
+{
+	"_id" : ObjectId("619bbb13ea3b888343ef7e27"),
+	"title" : "Dune",
+	"rating" : 4.9
+}
+> db.movies.find();
+{ "_id" : ObjectId("619bba9bea3b888343ef7e24"), "title" : "Aliens", "rating" : 4.5 }
+{ "_id" : ObjectId("619bbafcea3b888343ef7e25"), "title" : "Terminator", "rating" : 4.8 }
+{ "_id" : ObjectId("619bbb09ea3b888343ef7e26"), "title" : "Avatar", "rating" : 4.9 }
+{ "_id" : ObjectId("619bbb13ea3b888343ef7e27"), "title" : "Dune", "rating" : 4.9 }
+> ls
+[native code]
+> db
+webdev
+> webdev
+uncaught exception: ReferenceError: webdev is not defined :
+@(shell):1:1
+> db.tweets.insert({);
+...     "_id": "123",
+...     "topic": "Web Development",
+...     "userName": "ReactJS",
+...     "verified": false,
+...     "handle": "ReactJS",
+...     "time": "2h",
+...     "title": "React.js is a component based front end library that makes it very easy to build Single Page Applications or SPAs",
+...     "tweet": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+...     "attachments": {
+...       "video": "unKvMC3Y1kI"
+...     },
+...     "logo-image": "../../images/react.png",
+...     "avatar-image": "../../images/react.png",
+...     "stats": {
+...       "comments": 123,
+...       "retweets": 234,
+...       "likes": 345
+...     }
+...   }
+uncaught exception: SyntaxError: expected property name, got ')' :
+@(shell):1:18
+> dp.tweets.insert({
+...     "_id": "123",
+...     "topic": "Web Development",
+...     "userName": "ReactJS",
+...     "verified": false,
+...     "handle": "ReactJS",
+...     "time": "2h",
+...     "title": "React.js is a component based front end library that makes it very easy to build Single Page Applications or SPAs",
+...     "tweet": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+...     "attachments": {
+...       "video": "unKvMC3Y1kI"
+...     },
+...     "logo-image": "../../images/react.png",
+...     "avatar-image": "../../images/react.png",
+...     "stats": {
+...       "comments": 123,
+...       "retweets": 234,
+...       "likes": 345
+...     }
+...   });
+uncaught exception: ReferenceError: dp is not defined :
+@(shell):1:1
+> db.tweets.insert{
+...     "_id": "123",
+...     "topic": "Web Development",
+...     "userName": "ReactJS",
+...     "verified": false,
+...     "handle": "ReactJS",
+...     "time": "2h",
+...     "title": "React.js is a component based front end library that makes it very easy to build Single Page Applications or SPAs",
+...     "tweet": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+...     "attachments": {
+...       "video": "unKvMC3Y1kI"
+...     },
+...     "logo-image": "../../images/react.png",
+...     "avatar-image": "../../images/react.png",
+...     "stats": {
+...       "comments": 123,
+...       "retweets": 234,
+...       "likes": 345
+...     }
+...   });
+uncaught exception: SyntaxError: unexpected token: '{' :
+@(shell):1:16
+> db.tweets.insert( {
+...     "_id": "123",
+...     "topic": "Web Development",
+...     "userName": "ReactJS",
+...     "verified": false,
+...     "handle": "ReactJS",
+...     "time": "2h",
+...     "title": "React.js is a component based front end library that makes it very easy to build Single Page Applications or SPAs",
+...     "tweet": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+...     "attachments": {
+...       "video": "unKvMC3Y1kI"
+...     },
+...     "logo-image": "../../images/react.png",
+...     "avatar-image": "../../images/react.png",
+...     "stats": {
+...       "comments": 123,
+...       "retweets": 234,
+...       "likes": 345
+...     }
+...   });
+WriteResult({ "nInserted" : 1 })
+> db.tweets.insert( {
+...     
+...     "topic": "Space",
+...     "userName": "SpaceX",
+...     "verified": false,
+...     "handle": "spacex",
+...     "title": "",
+...     "tweet": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+...     "attachments": {
+...       "image": "../../images/starship.jpg"
+...     },
+...     "time": "last month",
+...     "logo-image": "../../images/starship.jpg",
+...     "avatar-image": "../../images/nodejs.png",
+...     "tweets": "120K",
+...     "stats": {
+...       "comments": 123,
+...       "retweets": 234,
+...       "likes": 345
+...     }
+...   });
+WriteResult({ "nInserted" : 1 })
+> db.tweets.insert( {
+...     
+...     "topic": "Web Development",
+...     "userName": "jQuery",
+...     "verified": false,
+...     "handle": "jQuery",
+...     "title": "jQuery",
+...     "tweet": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+...     "time": "last week",
+...     "logo-image": "../../../images/jquery.png",
+...     "avatar-image": "../../../images/jquery.png",
+...     "tweets": "122K",
+...     "stats": {
+...       "comments": 123,
+...       "retweets": 234,
+...       "likes": 345
+...     }
+...   });
+WriteResult({ "nInserted" : 1 })
+> db.tweets.insert( {
+...     
+...     "topic": "Web Development",
+...     "userName": "NodeJS",
+...     "verified": true,
+...     "handle": "NodeJS",
+...     "title": "",
+...     "tweet": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+...     "time": "last month",
+...     "logo-image": "../../images/nodejs.png",
+...     "avatar-image": "../../images/nodejs.png",
+...     "tweets": "120K",
+...     "stats": {
+...       "comments": 123,
+...       "retweets": 234,
+...       "likes": 345
+...     }
+...   });
+WriteResult({ "nInserted" : 1 })
+> db.tweets.insert( {
+...     
+...     "topic": "Web Development",
+...     "userName": "ReactJS",
+...     "verified": false,
+...     "handle": "ReactJS",
+...     "time": "2h",
+...     "title": "React.js is a component based front end library that makes it very easy to build Single Page Applications or SPAs",
+...     "tweet": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+...     "attachments": {
+...       "video": "unKvMC3Y1kI"
+...     },
+...     "logo-image": "../../images/react.png",
+...     "avatar-image": "../../images/react.png",
+...     "stats": {
+...       "comments": 123,
+...       "retweets": 234,
+...       "likes": 345
+...     }
+...   });
+WriteResult({ "nInserted" : 1 })
+> db.tweets.find().pretty()
+{
+	"_id" : "123",
+	"topic" : "Web Development",
+	"userName" : "ReactJS",
+	"verified" : false,
+	"handle" : "ReactJS",
+	"time" : "2h",
+	"title" : "React.js is a component based front end library that makes it very easy to build Single Page Applications or SPAs",
+	"tweet" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+	"attachments" : {
+		"video" : "unKvMC3Y1kI"
+	},
+	"logo-image" : "../../images/react.png",
+	"avatar-image" : "../../images/react.png",
+	"stats" : {
+		"comments" : 123,
+		"retweets" : 234,
+		"likes" : 345
+	}
+}
+{
+	"_id" : ObjectId("619bd6b2ea3b888343ef7e28"),
+	"topic" : "Space",
+	"userName" : "SpaceX",
+	"verified" : false,
+	"handle" : "spacex",
+	"title" : "",
+	"tweet" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+	"attachments" : {
+		"image" : "../../images/starship.jpg"
+	},
+	"time" : "last month",
+	"logo-image" : "../../images/starship.jpg",
+	"avatar-image" : "../../images/nodejs.png",
+	"tweets" : "120K",
+	"stats" : {
+		"comments" : 123,
+		"retweets" : 234,
+		"likes" : 345
+	}
+}
+{
+	"_id" : ObjectId("619bd6d0ea3b888343ef7e29"),
+	"topic" : "Web Development",
+	"userName" : "jQuery",
+	"verified" : false,
+	"handle" : "jQuery",
+	"title" : "jQuery",
+	"tweet" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+	"time" : "last week",
+	"logo-image" : "../../../images/jquery.png",
+	"avatar-image" : "../../../images/jquery.png",
+	"tweets" : "122K",
+	"stats" : {
+		"comments" : 123,
+		"retweets" : 234,
+		"likes" : 345
+	}
+}
+{
+	"_id" : ObjectId("619bd6e8ea3b888343ef7e2a"),
+	"topic" : "Web Development",
+	"userName" : "NodeJS",
+	"verified" : true,
+	"handle" : "NodeJS",
+	"title" : "",
+	"tweet" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+	"time" : "last month",
+	"logo-image" : "../../images/nodejs.png",
+	"avatar-image" : "../../images/nodejs.png",
+	"tweets" : "120K",
+	"stats" : {
+		"comments" : 123,
+		"retweets" : 234,
+		"likes" : 345
+	}
+}
+{
+	"_id" : ObjectId("619bd709ea3b888343ef7e2b"),
+	"topic" : "Web Development",
+	"userName" : "ReactJS",
+	"verified" : false,
+	"handle" : "ReactJS",
+	"time" : "2h",
+	"title" : "React.js is a component based front end library that makes it very easy to build Single Page Applications or SPAs",
+	"tweet" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+	"attachments" : {
+		"video" : "unKvMC3Y1kI"
+	},
+	"logo-image" : "../../images/react.png",
+	"avatar-image" : "../../images/react.png",
+	"stats" : {
+		"comments" : 123,
+		"retweets" : 234,
+		"likes" : 345
+	}
+}
+> clear
+uncaught exception: ReferenceError: clear is not defined :
+@(shell):1:1
+> db.tweets.deleteOne({_id:"123"});
+{ "acknowledged" : true, "deletedCount" : 1 }
+> db.tweets.find().pretty()
+{
+	"_id" : ObjectId("619bd6b2ea3b888343ef7e28"),
+	"topic" : "Space",
+	"userName" : "SpaceX",
+	"verified" : false,
+	"handle" : "spacex",
+	"title" : "",
+	"tweet" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+	"attachments" : {
+		"image" : "../../images/starship.jpg"
+	},
+	"time" : "last month",
+	"logo-image" : "../../images/starship.jpg",
+	"avatar-image" : "../../images/nodejs.png",
+	"tweets" : "120K",
+	"stats" : {
+		"comments" : 123,
+		"retweets" : 234,
+		"likes" : 345
+	}
+}
+{
+	"_id" : ObjectId("619bd6d0ea3b888343ef7e29"),
+	"topic" : "Web Development",
+	"userName" : "jQuery",
+	"verified" : false,
+	"handle" : "jQuery",
+	"title" : "jQuery",
+	"tweet" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+	"time" : "last week",
+	"logo-image" : "../../../images/jquery.png",
+	"avatar-image" : "../../../images/jquery.png",
+	"tweets" : "122K",
+	"stats" : {
+		"comments" : 123,
+		"retweets" : 234,
+		"likes" : 345
+	}
+}
+{
+	"_id" : ObjectId("619bd6e8ea3b888343ef7e2a"),
+	"topic" : "Web Development",
+	"userName" : "NodeJS",
+	"verified" : true,
+	"handle" : "NodeJS",
+	"title" : "",
+	"tweet" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+	"time" : "last month",
+	"logo-image" : "../../images/nodejs.png",
+	"avatar-image" : "../../images/nodejs.png",
+	"tweets" : "120K",
+	"stats" : {
+		"comments" : 123,
+		"retweets" : 234,
+		"likes" : 345
+	}
+}
+{
+	"_id" : ObjectId("619bd709ea3b888343ef7e2b"),
+	"topic" : "Web Development",
+	"userName" : "ReactJS",
+	"verified" : false,
+	"handle" : "ReactJS",
+	"time" : "2h",
+	"title" : "React.js is a component based front end library that makes it very easy to build Single Page Applications or SPAs",
+	"tweet" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+	"attachments" : {
+		"video" : "unKvMC3Y1kI"
+	},
+	"logo-image" : "../../images/react.png",
+	"avatar-image" : "../../images/react.png",
+	"stats" : {
+		"comments" : 123,
+		"retweets" : 234,
+		"likes" : 345
+	}
+}
+> db.who.insert( {   "avatarIcon": "../../../images/java.png",
+...         "userName": "Java",
+...         "handle": "Java" } );
+WriteResult({ "nInserted" : 1 })
+> db.who.insert( {   "avatarIcon": "../../../images/starship.jpg",
+...         "userName": "Relativity Space",
+...         "handle": "relativityspace"} );
+WriteResult({ "nInserted" : 1 })
+> db.who.insert( {   "avatarIcon": "../../../images/virgin.jpeg",
+...         "userName": "Virgin Galactic",
+...         "handle": "virgingalactic"} );
+WriteResult({ "nInserted" : 1 })
+> db.who.insert( {   "avatarIcon": "../../../images/nasa.png",
+...         "userName": "NASA",
+...         "handle": "NASA"} );
+WriteResult({ "nInserted" : 1 })
+> db.who.insert(  {   "avatarIcon": "../../../images/tesla.png",
+...         "userName": "Tesla",
+...         "handle": "Tesla" } );
+WriteResult({ "nInserted" : 1 })
+> do.who.find().pretty()
+uncaught exception: SyntaxError: expected expression, got '.' :
+@(shell):1:2
+> db.who.find().pretty()
+{
+	"_id" : ObjectId("619be96cea3b888343ef7e2c"),
+	"avatarIcon" : "../../../images/java.png",
+	"userName" : "Java",
+	"handle" : "Java"
+}
+{
+	"_id" : ObjectId("619be982ea3b888343ef7e2d"),
+	"avatarIcon" : "../../../images/starship.jpg",
+	"userName" : "Relativity Space",
+	"handle" : "relativityspace"
+}
+{
+	"_id" : ObjectId("619be993ea3b888343ef7e2e"),
+	"avatarIcon" : "../../../images/virgin.jpeg",
+	"userName" : "Virgin Galactic",
+	"handle" : "virgingalactic"
+}
+{
+	"_id" : ObjectId("619be9a5ea3b888343ef7e2f"),
+	"avatarIcon" : "../../../images/nasa.png",
+	"userName" : "NASA",
+	"handle" : "NASA"
+}
+{
+	"_id" : ObjectId("619be9b1ea3b888343ef7e30"),
+	"avatarIcon" : "../../../images/tesla.png",
+	"userName" : "Tesla",
+	"handle" : "Tesla"
+}
+> db.who.updateOne({_id: ObjectId("619be96cea3b888343ef7e2c")},{)
+... "_id" : ObjectId("619be96cea3b888343ef7e2c"),
+... "avatarIcon" : "../../../images/java.png",
+... "userName" : "Java",
+... "handle" : "Java"
+... db.who.find().pretty()
+... ]
+uncaught exception: SyntaxError: expected property name, got ')' :
+@(shell):1:62
+> 
+> 
+> db.who.updateOne({_id: ObjectId("619be96cea3b888343ef7e2c")},{"avatarIcon" : "../../../images/java.png", "userName" : "JavaTest", "handle" : "Java"});
+uncaught exception: Error: the update operation document must contain atomic operators :
+DBCollection.prototype.updateOne@src/mongo/shell/crud_api.js:565:19
+@(shell):1:1
+> db.who.updateOne({_id: ObjectId("619be96cea3b888343ef7e2c")},$set:{"avatarIcon" : "../../../images/java.png", "userName" : "JavaTest", "handle" : "Java"});
+uncaught exception: SyntaxError: missing ) after argument list :
+@(shell):1:65
+> db.who.updateOne({_id: ObjectId("619be96cea3b888343ef7e2c")},{$set:{"avatarIcon" : "../../../images/java.png", "userName" : "JavaTest", "handle" : "Java"}});
+{ "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
+> db.who.find().pretty()
+{
+	"_id" : ObjectId("619be96cea3b888343ef7e2c"),
+	"avatarIcon" : "../../../images/java.png",
+	"userName" : "JavaTest",
+	"handle" : "Java"
+}
+{
+	"_id" : ObjectId("619be982ea3b888343ef7e2d"),
+	"avatarIcon" : "../../../images/starship.jpg",
+	"userName" : "Relativity Space",
+	"handle" : "relativityspace"
+}
+{
+	"_id" : ObjectId("619be993ea3b888343ef7e2e"),
+	"avatarIcon" : "../../../images/virgin.jpeg",
+	"userName" : "Virgin Galactic",
+	"handle" : "virgingalactic"
+}
+{
+	"_id" : ObjectId("619be9a5ea3b888343ef7e2f"),
+	"avatarIcon" : "../../../images/nasa.png",
+	"userName" : "NASA",
+	"handle" : "NASA"
+}
+{
+	"_id" : ObjectId("619be9b1ea3b888343ef7e30"),
+	"avatarIcon" : "../../../images/tesla.png",
+	"userName" : "Tesla",
+	"handle" : "Tesla"
+}
+> db.profiles.insert( {
+... "firstName": "Swapnil",
+...     "lastName": "Mittal",
+...     "handle": "smitten",
+... "profilePicture": "../../images/dp.jpg", 
+...     "bannerPicture": "../../images/matrix.jpg",
+... "bio": "Student @ Khoury College of Computer Sciences. Interested in web-dev, software engineering and ethical hacking(not very good tho!). Love to watch mind-bending thriller movies (anyone who got TENET in the first go is lying. Trust me!)",
+...     "website": "youtube.com/webdevtv",
+... "location": "Boston, MA",
+...     "dateOfBirth": "May 4 1995",
+...     "dateJoined": "September 20",
+... "followingCount": 312,
+...     "followersCount": 180
+...     });
+WriteResult({ "nInserted" : 1 })
+> db.profiles.pretty()
+uncaught exception: TypeError: db.profiles.pretty is not a function :
+@(shell):1:1
+> db.profiles.pretty();
+uncaught exception: TypeError: db.profiles.pretty is not a function :
+@(shell):1:1
+> db.profiles.find().pretty();
+{
+	"_id" : ObjectId("619d0687ea3b888343ef7e31"),
+	"firstName" : "Swapnil",
+	"lastName" : "Mittal",
+	"handle" : "smitten",
+	"profilePicture" : "../../images/dp.jpg",
+	"bannerPicture" : "../../images/matrix.jpg",
+	"bio" : "Student @ Khoury College of Computer Sciences. Interested in web-dev, software engineering and ethical hacking(not very good tho!). Love to watch mind-bending thriller movies (anyone who got TENET in the first go is lying. Trust me!)",
+	"website" : "youtube.com/webdevtv",
+	"location" : "Boston, MA",
+	"dateOfBirth" : "May 4 1995",
+	"dateJoined" : "September 20",
+	"followingCount" : 312,
+	"followersCount" : 180
+}
